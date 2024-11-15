@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grading System</title>
+    <style>
+        body {
+            background: url(../background/4_20241028_230629_0003.jpg); 
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: 99%;
+            background-color: maroon;
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color:  rgb(209, 174, 86);
+            color: black;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+        .buttons {
+            margin-bottom: 20px;
+        }
+        .buttons button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            background-color:  rgb(209, 174, 86);
+            color: black;
+            cursor: pointer;
+        }
+        .buttons button:hover {
+            background-color: #45a049;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            color: black;
+            
+        }
+        h2 {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bachelor of Science in Computer Engineering (CPE 3-1)</h2>
+    <div class="container">
+        <div class="buttons">
+            <button onclick="addStudent()">Add</button>
+            <button onclick="editStudent()">Edit</button>
+            <button onclick="clearTable()">Clear</button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by student name" onkeyup="searchStudent()">
+        </div>
+        <table id="gradingTable">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Quiz 1</th>
+                    <th>Quiz 2</th>
+                    <th>Activity</th>
+                    <th>Recitation</th>
+                    <th>Prelim</th>
+                    <th>Midterm</th>
+                    <th>Semi-Finals</th>
+                    <th>Finals</th>
+                    <th>Final Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark Rodgil Gabo</td>
+                    <td contenteditable="true">85</td>
+                    <td contenteditable="true">90</td>
+                    <td contenteditable="true">78</td>
+                    <td contenteditable="true">88</td>
+                    <td contenteditable="true">84</td>
+                    <td contenteditable="true">89</td>
+                    <td contenteditable="true">87</td>
+                    <td contenteditable="true">91</td>
+                    <td class="final-grade">86.5</td>
+                </tr>
+                <tr>
+                    <td>Mark Dave Hermosa</td>
+                    <td contenteditable="true">92</td>
+                    <td contenteditable="true">87</td>
+                    <td contenteditable="true">85</td>
+                    <td contenteditable="true">91</td>
+                    <td contenteditable="true">89</td>
+                    <td contenteditable="true">90</td>
+                    <td contenteditable="true">93</td>
+                    <td contenteditable="true">95</td>
+                    <td class="final-grade">90.25</td>
+                </tr>
+                <tr>
+                    <td>Lorence Ogama</td>
+                    <td contenteditable="true">78</td>
+                    <td contenteditable="true">83</td>
+                    <td contenteditable="true">80</td>
+                    <td contenteditable="true">76</td>
+                    <td contenteditable="true">82</td>
+                    <td contenteditable="true">81</td>
+                    <td contenteditable="true">79</td>
+                    <td contenteditable="true">84</td>
+                    <td class="final-grade">80.38</td>
+                </tr>
+                <tr>
+                    <td>Faith Gallos</td>
+                    <td contenteditable="true">88</td>
+                    <td contenteditable="true">94</td>
+                    <td contenteditable="true">90</td>
+                    <td contenteditable="true">85</td>
+                    <td contenteditable="true">91</td>
+                    <td contenteditable="true">92</td>
+                    <td contenteditable="true">90</td>
+                    <td contenteditable="true">89</td>
+                    <td class="final-grade">89.88</td>
+                </tr>
+                <tr>
+                    <td>Nicole Bacalangco</td>
+                    <td contenteditable="true">75</td>
+                    <td contenteditable="true">80</td>
+                    <td contenteditable="true">70</td>
+                    <td contenteditable="true">82</td>
+                    <td contenteditable="true">78</td>
+                    <td contenteditable="true">76</td>
+                    <td contenteditable="true">74</td>
+                    <td contenteditable="true">81</td>
+                    <td class="final-grade">77.0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function addStudent() {
+            let table = document.getElementById("gradingTable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+            let cells = ["Student Name", "Quiz 1", "Quiz 2", "Activity", "Recitation", "Prelim", "Midterm", "Semi-Finals", "Finals"];
+            
+            cells.forEach((_, index) => {
+                let cell = newRow.insertCell();
+                cell.contentEditable = "true";
+                cell.innerText = index === 0 ? "" : "0";
+            });
+
+            let finalGradeCell = newRow.insertCell();
+            finalGradeCell.className = "final-grade";
+            finalGradeCell.innerText = "0.00";
+        }
+
+        function editStudent() {
+            alert('To edit a student, click on any cell and modify the values directly.');
+        }
+
+        function clearTable() {
+            let table = document.getElementById("gradingTable").getElementsByTagName('tbody')[0];
+            table.innerHTML = "";
+        }
+
+        function searchStudent() {
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let table = document.getElementById("gradingTable");
+            let tr = table.getElementsByTagName("tr");
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = txtValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
+                }
+            }
+        }
+
+        function calculateFinalGrade(row) {
+            let cells = row.getElementsByTagName("td");
+            let total = 0;
+            for (let i = 1; i <= 8; i++) { // Sum from Quiz 1 to Finals
+                total += parseFloat(cells[i].innerText) || 0;
+            }
+            let average = total / 8;
+            cells[9].innerText = average.toFixed(2); // Update Final Grade
+        }
+
+        document.getElementById("gradingTable").addEventListener("input", (event) => {
+            if (event.target.tagName === "TD" && event.target.cellIndex >= 1 && event.target.cellIndex <= 8) {
+                let row = event.target.parentElement;
+                calculateFinalGrade(row);
+            }
+        });
+    </script>
+</body>
+</html>
